@@ -469,11 +469,13 @@ require("lazy").setup({
 			--  - capabilities (table): Override fields in capabilities. Can be used to disable certain LSP features.
 			--  - settings (table): Override the default settings passed when initializing the server.
 			--        For example, to see the options for `lua_ls`, you could go to: https://luals.github.io/wiki/settings/
+			local util = require("lspconfig/util")
 			local servers = {
 				clangd = {},
 				pyright = {},
 				gopls = {
 					filetypes = { "go", "gomod", "gowork", "gotmpl" },
+
 					settings = {
 						completeUnimported = true,
 						usePlaceholders = true,
@@ -483,7 +485,15 @@ require("lazy").setup({
 					},
 				},
 				rust_analyzer = {},
-				asm_lsp = {},
+				asm_lsp = {
+					command = "asm-lsp",
+					root_dir = util.root_pattern({ "asm", "s", "S" }),
+					filetypes = {
+						"asm",
+						"s",
+						"S",
+					},
+				},
 				tsserver = {},
 				--
 
